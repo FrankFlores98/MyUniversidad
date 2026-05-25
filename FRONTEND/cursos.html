@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mis Cursos - Mi Universidad</title>
+    <link rel="stylesheet" href="cursos.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="cursos.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="dark-mode.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <!-- Botón de regreso -->
+    <div class="back-button-container">
+        <button class="btn-back" onclick="goBackToDashboard()">
+            <i class="fas fa-arrow-left"></i> Volver al Dashboard
+        </button>
+        <div class="btn-export-group">
+            <button class="btn-export-excel" onclick="exportarExcel()">
+                <i class="fas fa-file-excel"></i> Exportar Excel
+            </button>
+            <button class="btn-export-print" onclick="imprimirCursos()">
+                <i class="fas fa-print"></i> Imprimir
+            </button>
+        </div>
+    </div>
+
+    <div class="container cursos-container py-4">
+        <!-- Título -->
+        <div class="page-header mb-4">
+            <h2><i class="fas fa-chalkboard-teacher"></i> Mis Cursos Asignados</h2>
+            <p>Gestiona los cursos que impartes este semestre</p>
+        </div>
+
+        <!-- Información del maestro -->
+        <div class="teacher-info-bar">
+            <div class="info-item">
+                <i class="fas fa-user"></i>
+                <span id="maestroNombre">Cargando...</span>
+            </div>
+            <div class="info-item">
+                <i class="fas fa-id-card"></i>
+                <span id="maestroMatricula">Cargando...</span>
+            </div>
+            <div class="info-item">
+                <i class="fas fa-calendar-alt"></i>
+                <span>Semestre Agosto-Diciembre 2024</span>
+            </div>
+        </div>
+
+        <!-- Resumen -->
+        <div class="stats-grid mb-4">
+            <div class="stat-card">
+                <div class="stat-icon primary">
+                    <i class="fas fa-book"></i>
+                </div>
+                <div class="stat-info">
+                    <h3 id="totalCursos">0</h3>
+                    <p>Cursos Asignados</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon success">
+                    <i class="fas fa-users"></i>
+                </div>
+                <div class="stat-info">
+                    <h3 id="totalAlumnos">0</h3>
+                    <p>Alumnos Totales</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon warning">
+                    <i class="fas fa-tasks"></i>
+                </div>
+                <div class="stat-info">
+                    <h3 id="totalTareas">0</h3>
+                    <p>Tareas Activas</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon info">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <div class="stat-info">
+                    <h3 id="promedioGeneral">0</h3>
+                    <p>Promedio General</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pestañas -->
+        <ul class="nav nav-tabs mb-4">
+            <li class="nav-item">
+                <a class="nav-link active" data-tab="cursos" onclick="switchTab('cursos')">
+                    <i class="fas fa-book"></i> Mis Cursos
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-tab="estadisticas" onclick="switchTab('estadisticas')">
+                    <i class="fas fa-chart-bar"></i> Estadísticas
+                </a>
+            </li>
+        </ul>
+
+        <!-- ========== MIS CURSOS ========== -->
+        <div id="cursosContent">
+            <div class="row" id="cursosContainer">
+                <!-- Cursos cargados dinámicamente -->
+            </div>
+        </div>
+
+        <!-- ========== ESTADÍSTICAS ========== -->
+        <div id="estadisticasContent" style="display: none;">
+            <div class="row">
+                <div class="col-md-6 mb-4">
+                    <div class="card">
+                        <div class="card-header bg-primary text-white">
+                            <h5 class="mb-0"><i class="fas fa-chart-line"></i> Rendimiento por Curso</h5>
+                        </div>
+                        <div class="card-body">
+                            <canvas id="rendimientoCursoChart" height="250"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-4">
+                    <div class="card">
+                        <div class="card-header bg-primary text-white">
+                            <h5 class="mb-0"><i class="fas fa-chart-pie"></i> Distribución de Calificaciones</h5>
+                        </div>
+                        <div class="card-body">
+                            <canvas id="distribucionChart" height="250"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 mb-4">
+                    <div class="card">
+                        <div class="card-header bg-primary text-white">
+                            <h5 class="mb-0"><i class="fas fa-chart-bar"></i> Comparativa de Cursos</h5>
+                        </div>
+                        <div class="card-body">
+                            <canvas id="comparativaChart" height="200"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de alumnos inscritos -->
+    <div class="modal fade" id="alumnosModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title"><i class="fas fa-users"></i> Alumnos Inscritos</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <h6 id="cursoNombreModal" class="mb-3"></h6>
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Matrícula</th>
+                                    <th>Nombre</th>
+                                    <th>Correo</th>
+                                    <th>Calificación</th>
+                                    <th>Asistencia</th>
+                                    <th>Estado</th>
+                                </tr>
+                            </thead>
+                            <tbody id="alumnosTableBody">
+                                <!-- Alumnos del curso -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" onclick="exportarAlumnosExcel()">
+                        <i class="fas fa-file-excel"></i> Exportar Excel
+                    </button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de tareas del curso -->
+    <div class="modal fade" id="tareasModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-info text-white">
+                    <h5 class="modal-title"><i class="fas fa-tasks"></i> Tareas del Curso</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <h6 id="cursoTareasNombre" class="mb-3"></h6>
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Título</th>
+                                    <th>Fecha Entrega</th>
+                                    <th>Entregas</th>
+                                    <th>Promedio</th>
+                                    <th>Estado</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tareasTableBody">
+                                <!-- Tareas del curso -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de confirmación -->
+    <div class="modal fade" id="confirmModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header" id="confirmModalHeader">
+                    <h5 class="modal-title"><i class="fas fa-check-circle"></i> Éxito</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body" id="confirmModalMessage">
+                    Acción realizada correctamente
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Aceptar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.sheetjs.com/xlsx-0.20.2/package/dist/xlsx.full.min.js"></script>
+    <script src="cursos.js"></script>
+    <script src="dark-mode.js"></script>
+</body>
+</html>

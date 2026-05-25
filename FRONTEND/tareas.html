@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tareas - Mi Universidad</title>
+    <link rel="stylesheet" href="tareas.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="tareas.css">
+     <script src="tareas.js"></script>
+     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="dark-mode.css">
+</head>
+<body>
+    <!-- Botón de regreso -->
+    <div class="back-button-container">
+        <button class="btn-back" onclick="goBackToDashboard()">
+            <i class="fas fa-arrow-left"></i> Volver al Dashboard
+        </button>
+    </div>
+
+    <div class="container tareas-container py-4">
+        <!-- Título dinámico según rol -->
+        <div class="page-header mb-4">
+            <h2 id="pageTitle"><i class="fas fa-tasks"></i> Mis Tareas</h2>
+            <p id="pageSubtitle">Gestiona tus tareas y entregas</p>
+        </div>
+
+        <!-- Pestañas principales -->
+        <ul class="nav nav-tabs mb-4" id="tareasTabs">
+            <li class="nav-item">
+                <a class="nav-link active" data-tab="pendientes" onclick="switchTab('pendientes')">
+                    <i class="fas fa-clock"></i> Pendientes
+                    <span class="badge-pendiente" id="pendienteCount">0</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-tab="entregadas" onclick="switchTab('entregadas')">
+                    <i class="fas fa-check-circle"></i> Entregadas
+                </a>
+            </li>
+            <li class="nav-item" id="crearTareaTab" style="display: none;">
+                <a class="nav-link" data-tab="crear" onclick="switchTab('crear')">
+                    <i class="fas fa-plus-circle"></i> Crear Tarea
+                </a>
+            </li>
+            <li class="nav-item" id="revisarTab" style="display: none;">
+                <a class="nav-link" data-tab="revisar" onclick="switchTab('revisar')">
+                    <i class="fas fa-clipboard-list"></i> Revisar Entregas
+                    <span class="badge-pendiente" id="revisarCount">0</span>
+                </a>
+            </li>
+        </ul>
+
+        <!-- Barra de búsqueda -->
+        <div class="search-filter-bar mb-4">
+            <div class="row">
+                <div class="col-md-8 mb-2 mb-md-0">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="searchTarea" placeholder="Buscar tarea, materia o descripción..." onkeyup="filterTareas()">
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <select id="filterMateria" class="form-select" onchange="filterTareas()">
+                        <option value="todas">Todas las materias</option>
+                        <option value="Matemáticas">Matemáticas</option>
+                        <option value="Programación">Programación</option>
+                        <option value="Bases de Datos">Bases de Datos</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== CONTENIDO PARA ALUMNOS ========== -->
+        <div id="alumnoContent">
+            <!-- Tareas Pendientes -->
+            <div id="pendientesContainer" class="row">
+                <!-- Tareas cargadas dinámicamente -->
+            </div>
+
+            <!-- Tareas Entregadas -->
+            <div id="entregadasContainer" class="table-responsive" style="display: none;">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Tarea</th>
+                            <th>Materia</th>
+                            <th>Fecha Entrega</th>
+                            <th>Fecha Entrega Real</th>
+                            <th>Calificación</th>
+                            <th>Estado</th>
+                        </tr>
+                    </thead>
+                    <tbody id="entregadasTableBody">
+                        <!-- Tareas entregadas -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- ========== CONTENIDO PARA MAESTROS ========== -->
+        <div id="maestroContent" style="display: none;">
+            <!-- Formulario para crear tarea -->
+            <div id="crearContainer" class="card" style="display: none;">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0"><i class="fas fa-plus-circle"></i> Crear Nueva Tarea</h5>
+                </div>
+                <div class="card-body">
+                    <form id="crearTareaForm">
+                        <div class="row">
+                            <div class="col-md-8 mb-3">
+                                <label><i class="fas fa-tag"></i> Título de la Tarea</label>
+                                <input type="text" class="form-control" id="tituloTarea" required placeholder="Ej: Investigación de algoritmos">
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label><i class="fas fa-book"></i> Materia</label>
+                                <select class="form-control" id="materiaTarea" required>
+                                    <option value="">Seleccionar materia</option>
+                                    <option value="Matemáticas">Matemáticas</option>
+                                    <option value="Programación">Programación</option>
+                                    <option value="Bases de Datos">Bases de Datos</option>
+                                </select>
+                            </div>
+                            <div class="col-12 mb-3">
+                                <label><i class="fas fa-align-left"></i> Descripción</label>
+                                <textarea class="form-control" id="descripcionTarea" rows="3" placeholder="Describe la tarea, instrucciones, formato, etc."></textarea>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label><i class="fas fa-calendar-alt"></i> Fecha de Entrega</label>
+                                <input type="datetime-local" class="form-control" id="fechaEntrega" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label><i class="fas fa-weight-hanging"></i> Porcentaje de la Calificación</label>
+                                <input type="number" class="form-control" id="pesoTarea" min="0" max="100" value="10" placeholder="%">
+                            </div>
+                            <div class="col-12 mb-3">
+                                <label><i class="fas fa-paperclip"></i> Material de Apoyo</label>
+                                <input type="file" class="form-control" id="archivosTarea" multiple>
+                                <small class="text-muted">Puedes adjuntar PDF, DOCX, imágenes, etc.</small>
+                            </div>
+                        </div>
+                        <div class="text-end">
+                            <button type="button" class="btn btn-secondary me-2" onclick="cancelarCrear()">Cancelar</button>
+                            <button type="submit" class="btn btn-primary">Publicar Tarea</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Revisar Entregas -->
+            <div id="revisarContainer" style="display: none;">
+                <div class="row" id="entregasPendientesContainer">
+                    <!-- Entregas por revisar -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Mensaje cuando no hay tareas -->
+        <div id="emptyMessage" class="text-center py-5" style="display: none;">
+            <i class="fas fa-check-circle" style="font-size: 3rem; color: #28a745;"></i>
+            <h4 class="mt-3">¡No hay tareas pendientes!</h4>
+            <p class="text-muted">Has completado todas tus tareas. ¡Buen trabajo!</p>
+        </div>
+    </div>
+
+    <!-- Modal para entregar tarea (Alumnos) -->
+    <div class="modal fade" id="entregarModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-success text-white">
+                    <h5 class="modal-title"><i class="fas fa-upload"></i> Entregar Tarea</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="entregaTareaId">
+                    <input type="hidden" id="entregaTareaTitulo">
+                    <h6 id="modalTareaTitulo" class="mb-3"></h6>
+                    <div class="mb-3">
+                        <label><i class="fas fa-comment"></i> Comentario (opcional)</label>
+                        <textarea class="form-control" id="comentarioEntrega" rows="3" placeholder="Agrega un comentario sobre tu entrega..."></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label><i class="fas fa-paperclip"></i> Archivos</label>
+                        <input type="file" class="form-control" id="archivosEntrega" multiple accept=".pdf,.doc,.docx,.jpg,.png,.zip">
+                        <small class="text-muted">Formatos permitidos: PDF, DOC, DOCX, JPG, PNG, ZIP</small>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-success" onclick="enviarEntrega()">Entregar Tarea</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para calificar (Maestros) -->
+    <div class="modal fade" id="calificarModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-warning text-dark">
+                    <h5 class="modal-title"><i class="fas fa-star"></i> Calificar Entrega</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="calificarEntregaId">
+                    <h6 id="calificarAlumnoNombre" class="mb-3"></h6>
+                    <div class="mb-3">
+                        <label><i class="fas fa-file-alt"></i> Archivo Entregado</label>
+                        <div id="archivoEntregado" class="mb-2"></div>
+                    </div>
+                    <div class="mb-3">
+                        <label><i class="fas fa-comment-dots"></i> Comentario del Alumno</label>
+                        <p id="comentarioAlumno" class="text-muted"></p>
+                    </div>
+                    <div class="mb-3">
+                        <label><i class="fas fa-star"></i> Calificación</label>
+                        <input type="number" class="form-control" id="calificacion" min="0" max="100" step="1" placeholder="0-100">
+                    </div>
+                    <div class="mb-3">
+                        <label><i class="fas fa-comment"></i> Retroalimentación</label>
+                        <textarea class="form-control" id="retroalimentacion" rows="3" placeholder="Comentarios para el alumno..."></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-warning" onclick="guardarCalificacion()">Guardar Calificación</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de confirmación -->
+    <div class="modal fade" id="confirmModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header" id="confirmModalHeader">
+                    <h5 class="modal-title"><i class="fas fa-check-circle"></i> Éxito</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body" id="confirmModalMessage">
+                    Acción realizada correctamente
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Aceptar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="tareas.js"></script>
+    <script src="dark-mode.js"></script>
+</body>
+</html>

@@ -1,0 +1,309 @@
+/* ============================================
+   MODO OSCURO - MI UNIVERSIDAD
+   Versión básica y funcional
+   ============================================ */
+
+/* ========== BOTÓN DE MODO OSCURO ========== */
+.btn-dark-mode {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 8px;
+    border-radius: 50%;
+    transition: all 0.3s;
+    color: #1e3c72;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-dark-mode:hover {
+    background: rgba(0, 0, 0, 0.1);
+    transform: scale(1.1);
+}
+
+/* ========== MODO OSCURO - CLASE PRINCIPAL ========== */
+body.dark-mode {
+    background: #1a1a2e;
+    color: #eee;
+}
+
+/* Sidebar en modo oscuro */
+body.dark-mode .sidebar {
+    background: linear-gradient(180deg, #0f0f23 0%, #0a0a1a 100%);
+}
+
+body.dark-mode .sidebar-header {
+    border-bottom-color: rgba(255, 255, 255, 0.05);
+}
+
+body.dark-mode .sidebar-menu-item:hover {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+body.dark-mode .sidebar-menu-item.active {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* Navbar en modo oscuro */
+body.dark-mode .navbar {
+    background: #16213e;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.2);
+}
+
+body.dark-mode .navbar-title h2 {
+    color: #eee;
+}
+
+body.dark-mode .user-info strong {
+    color: #eee;
+}
+
+body.dark-mode .user-info small {
+    color: #aaa !important;
+}
+
+/* Cards en modo oscuro */
+body.dark-mode .card {
+    background: #16213e;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.2);
+}
+
+body.dark-mode .card-header {
+    border-bottom-color: rgba(255, 255, 255, 0.1);
+}
+
+body.dark-mode .card-header.bg-primary {
+    background: #0f0f23 !important;
+}
+
+/* Tarjetas de estadísticas */
+body.dark-mode .stat-card {
+    background: #16213e;
+}
+
+body.dark-mode .stat-info p {
+    color: #aaa;
+}
+
+body.dark-mode .stat-info h3 {
+    color: #eee;
+}
+
+/* Tablas en modo oscuro */
+body.dark-mode .table {
+    color: #eee;
+}
+
+body.dark-mode .table th {
+    background: #0f0f23;
+    color: #eee;
+    border-bottom-color: #2a2a4a;
+}
+
+body.dark-mode .table td {
+    border-top-color: #2a2a4a;
+}
+
+body.dark-mode .table-hover tbody tr:hover {
+    background: #1a1a3e;
+}
+
+/* Formularios en modo oscuro */
+body.dark-mode .form-control,
+body.dark-mode .form-select {
+    background: #0f0f23;
+    border-color: #2a2a4a;
+    color: #eee;
+}
+
+body.dark-mode .form-control:focus,
+body.dark-mode .form-select:focus {
+    border-color: #4facfe;
+    box-shadow: 0 0 0 3px rgba(79, 172, 254, 0.2);
+}
+
+body.dark-mode .form-control::placeholder {
+    color: #666;
+}
+
+body.dark-mode label {
+    color: #ddd;
+}
+
+/* Búsqueda y filtros */
+body.dark-mode .search-box input {
+    background: #0f0f23;
+    border-color: #2a2a4a;
+    color: #eee;
+}
+
+body.dark-mode .search-box i {
+    color: #666;
+}
+
+body.dark-mode .filters-bar,
+body.dark-mode .search-filter-bar {
+    background: #16213e;
+}
+
+/* Actividades recientes */
+body.dark-mode .activity-item {
+    border-bottom-color: #2a2a4a;
+}
+
+body.dark-mode .activity-item span {
+    color: #ddd;
+}
+
+body.dark-mode .activity-item small {
+    color: #888;
+}
+
+/* Progress bars */
+body.dark-mode .progress {
+    background: #2a2a4a;
+}
+
+/* Botón de regreso */
+body.dark-mode .btn-back {
+    background: #2a2a4a;
+}
+
+body.dark-mode .btn-back:hover {
+    background: #3a3a5a;
+}
+
+/* Modales */
+body.dark-mode .modal-content {
+    background: #16213e;
+}
+
+body.dark-mode .modal-header {
+    border-bottom-color: #2a2a4a;
+}
+
+body.dark-mode .modal-footer {
+    border-top-color: #2a2a4a;
+}
+
+body.dark-mode .btn-close {
+    filter: invert(1);
+}
+
+body.dark-mode .btn-secondary {
+    background: #2a2a4a;
+    border-color: #3a3a5a;
+    color: #eee;
+}
+
+/* Badges */
+body.dark-mode .badge {
+    background: #2a2a4a;
+}
+
+/* Información del usuario */
+body.dark-mode .info-item span {
+    color: #ddd;
+}
+
+body.dark-mode .info-badge {
+    background: #0f0f23;
+}
+
+/* Paginación */
+body.dark-mode .pagination .page-item .page-link {
+    background: #16213e;
+    color: #ddd;
+    border-color: #2a2a4a;
+}
+
+body.dark-mode .pagination .page-item.active .page-link {
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+    color: white;
+    border-color: transparent;
+}
+
+body.dark-mode .pagination .page-item .page-link:hover {
+    background: #2a2a4a;
+    color: #eee;
+}
+
+/* Tarjetas de tareas */
+body.dark-mode .tarea-card {
+    background: #16213e;
+    border-left-color: #4facfe;
+}
+
+body.dark-mode .tarea-header {
+    background: #0f0f23;
+}
+
+body.dark-mode .tarea-card h5 {
+    color: #eee;
+}
+
+body.dark-mode .tarea-descripcion {
+    color: #bbb;
+}
+
+body.dark-mode .tarea-meta {
+    color: #aaa;
+}
+
+body.dark-mode .tarea-archivos {
+    background: #0f0f23;
+}
+
+/* Tarjetas de cursos */
+body.dark-mode .curso-card {
+    background: #16213e;
+}
+
+body.dark-mode .curso-header {
+    background: #0f0f23;
+}
+
+body.dark-mode .curso-info p {
+    color: #bbb;
+}
+
+body.dark-mode .curso-info i {
+    color: #4facfe;
+}
+
+/* Reportes */
+body.dark-mode .reporte-contenido {
+    background: #16213e;
+}
+
+body.dark-mode .reporte-header {
+    border-bottom-color: #2a2a4a;
+}
+
+body.dark-mode .reporte-info {
+    background: #0f0f23;
+}
+
+body.dark-mode .reporte-footer {
+    border-top-color: #2a2a4a;
+    color: #888;
+}
+
+/* Scrollbar en modo oscuro */
+body.dark-mode ::-webkit-scrollbar-track {
+    background: #1a1a2e;
+}
+
+body.dark-mode ::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+}
+
+/* ========== ANIMACIÓN PARA EL CAMBIO DE MODO ========== */
+body,
+body * {
+    transition: background-color 0.3s ease, color 0.2s ease, border-color 0.2s ease;
+}

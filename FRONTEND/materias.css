@@ -1,0 +1,428 @@
+/* ============================================
+   MATERIAS - MI UNIVERSIDAD
+   ============================================ */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: #f0f2f5;
+    min-height: 100vh;
+}
+
+/* ========== BOTÓN DE REGRESO ========== */
+.back-button-container {
+    padding: 15px 20px 0 20px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.btn-back {
+    background: linear-gradient(135deg, #6c757d 0%, #5a6268 100%);
+    color: white;
+    border: none;
+    padding: 10px 25px;
+    border-radius: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.9rem;
+}
+
+.btn-back:hover {
+    transform: translateX(-5px);
+    box-shadow: 0 5px 15px rgba(108, 117, 125, 0.4);
+}
+
+/* ========== CONTENEDOR PRINCIPAL ========== */
+.materias-container {
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.page-header h2 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #1e3c72;
+    margin-bottom: 5px;
+}
+
+.page-header p {
+    color: #666;
+    margin: 0;
+}
+
+/* ========== TABS ========== */
+.nav-tabs {
+    border-bottom: 2px solid #e0e0e0;
+    gap: 5px;
+}
+
+.nav-tabs .nav-link {
+    border: none;
+    border-radius: 12px;
+    padding: 10px 25px;
+    font-weight: 500;
+    color: #666;
+    transition: all 0.3s;
+    cursor: pointer;
+}
+
+.nav-tabs .nav-link:hover {
+    background: #f0f2f5;
+    color: #1e3c72;
+}
+
+.nav-tabs .nav-link.active {
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+    color: white;
+}
+
+/* ========== BARRA DE BÚSQUEDA ========== */
+.search-filter-bar {
+    background: white;
+    padding: 20px;
+    border-radius: 16px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.search-box {
+    position: relative;
+}
+
+.search-box i {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #999;
+}
+
+.search-box input {
+    width: 100%;
+    padding: 12px 15px 12px 45px;
+    border: 2px solid #e0e0e0;
+    border-radius: 12px;
+    font-family: 'Poppins', sans-serif;
+    transition: all 0.3s;
+}
+
+.search-box input:focus {
+    outline: none;
+    border-color: #1e3c72;
+    box-shadow: 0 0 0 3px rgba(30, 60, 114, 0.1);
+}
+
+.form-select {
+    border-radius: 12px;
+    border: 2px solid #e0e0e0;
+    padding: 12px 15px;
+    font-family: 'Poppins', sans-serif;
+    cursor: pointer;
+}
+
+/* ========== TARJETAS DE ESTADÍSTICAS ========== */
+.stat-materia-card {
+    background: white;
+    border-radius: 16px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s;
+}
+
+.stat-materia-card:hover {
+    transform: translateY(-3px);
+}
+
+.stat-materia-card i {
+    font-size: 2rem;
+    color: #1e3c72;
+}
+
+.stat-materia-card h3 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin: 0;
+    color: #1e3c72;
+}
+
+.stat-materia-card p {
+    margin: 0;
+    color: #666;
+    font-size: 0.85rem;
+}
+
+/* ========== TARJETAS DE MATERIAS ========== */
+.materia-card {
+    background: white;
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s;
+    border-left: 4px solid #1e3c72;
+    animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.materia-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+.materia-card .materia-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 15px;
+}
+
+.materia-card h5 {
+    color: #1e3c72;
+    font-weight: 700;
+    margin: 0;
+    font-size: 1.1rem;
+}
+
+.materia-card .badge {
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.badge-semestre {
+    background: #1e3c72;
+    color: white;
+}
+
+.badge-cursando {
+    background: #ffc107;
+    color: #856404;
+}
+
+.badge-aprobado {
+    background: #28a745;
+    color: white;
+}
+
+.badge-reprobado {
+    background: #dc3545;
+    color: white;
+}
+
+.materia-info {
+    margin-bottom: 15px;
+}
+
+.materia-info p {
+    margin-bottom: 8px;
+    font-size: 0.85rem;
+    color: #555;
+}
+
+.materia-info i {
+    width: 25px;
+    color: #1e3c72;
+}
+
+.progreso-container {
+    margin-top: 15px;
+}
+
+.progreso-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.75rem;
+    color: #666;
+    margin-bottom: 5px;
+}
+
+.progress {
+    height: 6px;
+    border-radius: 10px;
+    background: #e0e0e0;
+}
+
+.progress-bar {
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+    border-radius: 10px;
+}
+
+.btn-accion {
+    margin-top: 15px;
+    display: flex;
+    gap: 10px;
+}
+
+.btn-ver-alumnos {
+    background: linear-gradient(135deg, #17a2b8 0%, #138496 100%);
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 10px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.btn-ver-alumnos:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(23, 162, 184, 0.4);
+}
+
+.btn-calificar {
+    background: linear-gradient(135deg, #ffc107 0%, #e0a800 100%);
+    color: #856404;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 10px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.btn-calificar:hover {
+    transform: translateY(-2px);
+}
+
+/* ========== BOTÓN INSCRIBIR ========== */
+.btn-inscribir-mas {
+    background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.btn-inscribir-mas:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px rgba(40, 167, 69, 0.4);
+}
+
+/* ========== MODAL ========== */
+.modal-content {
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.modal-header {
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+    color: white;
+    border: none;
+}
+
+.modal-header .btn-close {
+    background: white;
+    border-radius: 50%;
+    opacity: 1;
+}
+
+.search-box-modal {
+    position: relative;
+}
+
+.search-box-modal i {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #999;
+}
+
+.search-box-modal input {
+    width: 100%;
+    padding: 12px 15px 12px 45px;
+    border: 2px solid #e0e0e0;
+    border-radius: 12px;
+}
+
+.materia-disponible {
+    background: #f8f9fa;
+    border-radius: 12px;
+    padding: 15px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.materia-disponible:hover {
+    background: #e8f0fe;
+    transform: translateX(5px);
+}
+
+.materia-disponible.selected {
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+    color: white;
+}
+
+.materia-disponible .materia-info h6 {
+    margin-bottom: 5px;
+    font-weight: 600;
+}
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 768px) {
+    .back-button-container {
+        padding: 10px 15px 0 15px;
+    }
+    
+    .page-header h2 {
+        font-size: 1.4rem;
+    }
+    
+    .nav-tabs .nav-link {
+        padding: 8px 15px;
+        font-size: 0.85rem;
+    }
+    
+    .stat-materia-card h3 {
+        font-size: 1.3rem;
+    }
+    
+    .materia-card .materia-header {
+        flex-direction: column;
+        gap: 10px;
+    }
+}
+
+/* ========== SCROLLBAR ========== */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f0f0f0;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+    border-radius: 10px;
+}

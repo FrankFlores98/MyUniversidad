@@ -1,0 +1,656 @@
+/* ============================================
+   REPORTES - MI UNIVERSIDAD
+   VERSIÓN COMPLETA
+   ============================================ */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: #f0f2f5;
+    min-height: 100vh;
+}
+
+/* ========== BOTÓN DE REGRESO ========== */
+.back-button-container {
+    padding: 15px 20px 0 20px;
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.btn-back {
+    background: linear-gradient(135deg, #6c757d 0%, #5a6268 100%);
+    color: white;
+    border: none;
+    padding: 10px 25px;
+    border-radius: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.9rem;
+}
+
+.btn-back:hover {
+    transform: translateX(-5px);
+    box-shadow: 0 5px 15px rgba(108, 117, 125, 0.4);
+}
+
+/* ========== CONTENEDOR PRINCIPAL ========== */
+.reportes-container {
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.page-header h2 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #1e3c72;
+    margin-bottom: 5px;
+}
+
+.page-header p {
+    color: #666;
+    margin: 0;
+}
+
+/* ========== PANEL DE CONFIGURACIÓN ========== */
+.config-panel .card {
+    border: none;
+    border-radius: 20px;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.config-panel .card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+.card-header {
+    padding: 15px 20px;
+    border-bottom: none;
+}
+
+.card-header.bg-primary {
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+}
+
+.card-header.bg-success {
+    background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+}
+
+.card-body {
+    padding: 25px;
+}
+
+label {
+    font-weight: 500;
+    margin-bottom: 8px;
+    color: #333;
+    font-size: 0.9rem;
+    display: block;
+}
+
+label i {
+    margin-right: 8px;
+    color: #1e3c72;
+}
+
+.form-select {
+    border-radius: 12px;
+    border: 2px solid #e0e0e0;
+    padding: 10px 15px;
+    font-family: 'Poppins', sans-serif;
+    cursor: pointer;
+    transition: all 0.3s;
+    background: white;
+}
+
+.form-select:focus {
+    border-color: #1e3c72;
+    box-shadow: 0 0 0 3px rgba(30, 60, 114, 0.1);
+    outline: none;
+}
+
+/* ========== BOTONES DE FORMATO ========== */
+.formato-buttons {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.btn-formato {
+    padding: 10px 20px;
+    border-radius: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s;
+    border: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-formato.pdf {
+    background: #dc3545;
+    color: white;
+}
+
+.btn-formato.pdf:hover {
+    background: #c82333;
+    transform: translateY(-2px);
+}
+
+.btn-formato.excel {
+    background: #28a745;
+    color: white;
+}
+
+.btn-formato.excel:hover {
+    background: #218838;
+    transform: translateY(-2px);
+}
+
+.btn-formato.word {
+    background: #007bff;
+    color: white;
+}
+
+.btn-formato.word:hover {
+    background: #0069d9;
+    transform: translateY(-2px);
+}
+
+.btn-formato.print {
+    background: #6c757d;
+    color: white;
+}
+
+.btn-formato.print:hover {
+    background: #5a6268;
+    transform: translateY(-2px);
+}
+
+.btn-formato.active {
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.3);
+    transform: scale(1.02);
+}
+
+/* ========== BOTÓN GENERAR ========== */
+.btn-generar {
+    background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1rem;
+}
+
+.btn-generar:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px rgba(40, 167, 69, 0.4);
+}
+
+/* ========== PANEL DE VISTA PREVIA ========== */
+.preview-panel .card {
+    border: none;
+    border-radius: 20px;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+}
+
+/* ========== ESTILOS DEL REPORTE ========== */
+.reporte-contenido {
+    padding: 20px;
+    background: white;
+    border-radius: 12px;
+}
+
+.reporte-header {
+    text-align: center;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 2px solid #1e3c72;
+}
+
+.reporte-header h2 {
+    color: #1e3c72;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.reporte-header p {
+    color: #666;
+    margin: 5px 0;
+}
+
+.reporte-info {
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+}
+
+.reporte-info p {
+    margin: 5px 0;
+    font-size: 0.9rem;
+}
+
+.reporte-tabla {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+    margin-bottom: 20px;
+}
+
+.reporte-tabla th {
+    background: #1e3c72;
+    color: white;
+    padding: 12px;
+    text-align: center;
+    font-weight: 600;
+    border: 1px solid #2a5298;
+}
+
+.reporte-tabla td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+}
+
+.reporte-tabla tr:hover {
+    background: #f5f5f5;
+}
+
+.reporte-tabla tfoot td {
+    background: #f8f9fa;
+    font-weight: 600;
+}
+
+.reporte-footer {
+    margin-top: 30px;
+    padding-top: 20px;
+    text-align: center;
+    border-top: 1px solid #ddd;
+    font-size: 0.8rem;
+    color: #666;
+}
+
+/* ========== TABLAS DE VISTA PREVIA ========== */
+.table-preview {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.table-preview th {
+    background: #1e3c72;
+    color: white;
+    padding: 10px;
+    text-align: center;
+}
+
+.table-preview td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+}
+
+/* ========== MODAL DE CONFIRMACIÓN ========== */
+.modal-content {
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.modal-header {
+    border: none;
+    padding: 15px 20px;
+}
+
+.modal-header#confirmModalHeader {
+    background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+}
+
+.modal-body {
+    padding: 20px;
+}
+
+.modal-footer {
+    border-top: 1px solid #e0e0e0;
+    padding: 15px 20px;
+}
+
+/* ========== MODO OSCURO ========== */
+body.dark-mode {
+    background: #1a1a2e;
+}
+
+body.dark-mode .btn-back {
+    background: #2a2a4a;
+}
+
+body.dark-mode .btn-back:hover {
+    background: #3a3a5a;
+}
+
+body.dark-mode .config-panel .card,
+body.dark-mode .preview-panel .card {
+    background: #16213e;
+}
+
+body.dark-mode .card-header.bg-primary {
+    background: #0f0f23 !important;
+}
+
+body.dark-mode .card-header.bg-success {
+    background: #0a2a1a !important;
+}
+
+body.dark-mode label {
+    color: #ddd;
+}
+
+body.dark-mode label i {
+    color: #4facfe;
+}
+
+body.dark-mode .form-select {
+    background: #0f0f23;
+    border-color: #2a2a4a;
+    color: #eee;
+}
+
+body.dark-mode .form-select:focus {
+    border-color: #4facfe;
+}
+
+body.dark-mode .btn-formato.pdf {
+    background: #c82333;
+}
+
+body.dark-mode .btn-formato.excel {
+    background: #218838;
+}
+
+body.dark-mode .btn-formato.word {
+    background: #0069d9;
+}
+
+body.dark-mode .btn-formato.print {
+    background: #5a6268;
+}
+
+body.dark-mode .reporte-contenido {
+    background: #16213e;
+}
+
+body.dark-mode .reporte-header {
+    border-bottom-color: #4facfe;
+}
+
+body.dark-mode .reporte-header h2 {
+    color: #eee;
+}
+
+body.dark-mode .reporte-header p {
+    color: #aaa;
+}
+
+body.dark-mode .reporte-info {
+    background: #0f0f23;
+}
+
+body.dark-mode .reporte-info p {
+    color: #bbb;
+}
+
+body.dark-mode .reporte-tabla th {
+    background: #0f0f23;
+    border-color: #2a2a4a;
+    color: #eee;
+}
+
+body.dark-mode .reporte-tabla td {
+    border-color: #2a2a4a;
+    color: #ddd;
+}
+
+body.dark-mode .reporte-tabla tr:hover {
+    background: #1a1a3e;
+}
+
+body.dark-mode .reporte-tabla tfoot td {
+    background: #0f0f23;
+}
+
+body.dark-mode .reporte-footer {
+    border-top-color: #2a2a4a;
+    color: #888;
+}
+
+body.dark-mode .modal-content {
+    background: #16213e;
+}
+
+body.dark-mode .modal-header {
+    border-bottom-color: #2a2a4a;
+}
+
+body.dark-mode .modal-footer {
+    border-top-color: #2a2a4a;
+}
+
+body.dark-mode .btn-close {
+    filter: invert(1);
+}
+
+body.dark-mode .btn-primary {
+    background: #4facfe;
+    border-color: #4facfe;
+}
+
+body.dark-mode .btn-secondary {
+    background: #2a2a4a;
+    border-color: #3a3a5a;
+    color: #eee;
+}
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 992px) {
+    .reportes-container {
+        padding: 0 15px;
+    }
+}
+
+@media (max-width: 768px) {
+    .back-button-container {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .page-header h2 {
+        font-size: 1.4rem;
+    }
+    
+    .formato-buttons {
+        justify-content: center;
+    }
+    
+    .btn-generar {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .reporte-tabla {
+        font-size: 0.75rem;
+    }
+    
+    .reporte-tabla th,
+    .reporte-tabla td {
+        padding: 6px;
+    }
+    
+    .card-body {
+        padding: 15px;
+    }
+}
+
+@media (max-width: 576px) {
+    .reporte-tabla {
+        font-size: 0.7rem;
+    }
+    
+    .reporte-tabla th,
+    .reporte-tabla td {
+        padding: 4px;
+    }
+    
+    .btn-formato {
+        padding: 6px 12px;
+        font-size: 0.75rem;
+    }
+}
+
+/* ========== ANIMACIONES ========== */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.card {
+    animation: fadeIn 0.5s ease;
+}
+
+.reporte-contenido {
+    animation: fadeInUp 0.4s ease;
+}
+
+/* ========== SCROLLBAR ========== */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f0f0f0;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(135deg, #2a5298 0%, #1e3c72 100%);
+}
+
+/* Modo oscuro scrollbar */
+body.dark-mode ::-webkit-scrollbar-track {
+    background: #1a1a2e;
+}
+
+body.dark-mode ::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+}
+
+/* ========== IMPRESIÓN ========== */
+@media print {
+    .back-button-container,
+    .config-panel,
+    .btn-generar,
+    .btn-dark-mode,
+    .formato-buttons {
+        display: none;
+    }
+    
+    .preview-panel .card {
+        box-shadow: none;
+        padding: 0;
+    }
+    
+    .reporte-contenido {
+        padding: 0;
+    }
+    
+    .reporte-tabla th {
+        background: #1e3c72;
+        color: white;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+}
+
+/* ========== UTILIDADES ADICIONALES ========== */
+.text-center {
+    text-align: center;
+}
+
+.text-muted {
+    color: #6c757d;
+}
+
+.mt-3 {
+    margin-top: 1rem;
+}
+
+.mb-3 {
+    margin-bottom: 1rem;
+}
+
+.mb-4 {
+    margin-bottom: 1.5rem;
+}
+
+.py-4 {
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+}
+
+.py-5 {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+}
+
+.text-end {
+    text-align: right;
+}
+
+.w-100 {
+    width: 100%;
+}

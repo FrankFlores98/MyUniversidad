@@ -1,0 +1,444 @@
+/* ============================================
+   KARDEX ACADÉMICO - MI UNIVERSIDAD
+   ============================================ */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: #f0f2f5;
+    min-height: 100vh;
+}
+
+/* ========== BOTÓN DE REGRESO ========== */
+.back-button-container {
+    padding: 15px 20px 0 20px;
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.btn-back {
+    background: linear-gradient(135deg, #6c757d 0%, #5a6268 100%);
+    color: white;
+    border: none;
+    padding: 10px 25px;
+    border-radius: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.9rem;
+}
+
+.btn-back:hover {
+    transform: translateX(-5px);
+    box-shadow: 0 5px 15px rgba(108, 117, 125, 0.4);
+}
+
+.btn-export-group {
+    display: flex;
+    gap: 10px;
+}
+
+.btn-export-pdf {
+    background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-export-pdf:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(220, 53, 69, 0.4);
+}
+
+.btn-export-excel {
+    background: linear-gradient(135deg, #28a745 0%, #218838 100%);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-export-excel:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(40, 167, 69, 0.4);
+}
+
+.btn-export-print {
+    background: linear-gradient(135deg, #17a2b8 0%, #138496 100%);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-export-print:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(23, 162, 184, 0.4);
+}
+
+/* ========== CONTENEDOR PRINCIPAL ========== */
+.kardex-container {
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* ========== ENCABEZADO ========== */
+.kardex-header {
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+    border-radius: 20px;
+    padding: 25px;
+    color: white;
+    margin-bottom: 25px;
+}
+
+.university-info {
+    text-align: center;
+}
+
+.university-info i {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+}
+
+.university-info h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0;
+}
+
+.university-info p {
+    opacity: 0.8;
+    margin: 0;
+}
+
+.folio-info p {
+    margin: 5px 0;
+    font-size: 0.85rem;
+}
+
+/* ========== TARJETA DE INFORMACIÓN ========== */
+.student-info-card, .kardex-table-container, .legend-container {
+    background: white;
+    border-radius: 20px;
+    margin-bottom: 25px;
+    overflow: hidden;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+}
+
+.card-header {
+    padding: 15px 20px;
+    border-bottom: none;
+}
+
+.card-header.bg-primary {
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+}
+
+.card-header.bg-secondary {
+    background: linear-gradient(135deg, #6c757d 0%, #5a6268 100%);
+}
+
+.card-body {
+    padding: 20px;
+}
+
+label {
+    font-weight: 500;
+    margin-bottom: 8px;
+    color: #555;
+    font-size: 0.8rem;
+    display: block;
+}
+
+label i {
+    margin-right: 5px;
+    color: #1e3c72;
+}
+
+.form-control {
+    border-radius: 12px;
+    border: 2px solid #e0e0e0;
+    padding: 8px 12px;
+    font-family: 'Poppins', sans-serif;
+    background: #f8f9fa;
+}
+
+.form-control[readonly] {
+    background: #f8f9fa;
+    cursor: default;
+}
+
+/* ========== RESUMEN DE CRÉDITOS ========== */
+.credits-summary {
+    margin-bottom: 25px;
+}
+
+.summary-card {
+    background: white;
+    border-radius: 16px;
+    padding: 15px 20px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s;
+}
+
+.summary-card:hover {
+    transform: translateY(-3px);
+}
+
+.summary-card i {
+    font-size: 2rem;
+    color: #1e3c72;
+}
+
+.summary-card h3 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin: 0;
+    color: #1e3c72;
+}
+
+.summary-card p {
+    margin: 0;
+    color: #666;
+    font-size: 0.8rem;
+}
+
+/* ========== TABLA DEL KARDEX ========== */
+#kardexTable {
+    margin-bottom: 0;
+}
+
+#kardexTable th {
+    background: #1e3c72;
+    color: white;
+    font-weight: 600;
+    padding: 12px;
+    text-align: center;
+    border: 1px solid #2a5298;
+}
+
+#kardexTable td {
+    padding: 10px;
+    vertical-align: middle;
+    text-align: center;
+}
+
+#kardexTable tbody tr:hover {
+    background: #f8f9ff;
+}
+
+#kardexTable tfoot td {
+    background: #f8f9fa;
+    font-weight: 600;
+    padding: 12px;
+}
+
+/* Badges de calificación */
+.badge-calificacion {
+    display: inline-block;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 0.85rem;
+}
+
+.calificacion-excelente {
+    background: #d4edda;
+    color: #155724;
+}
+
+.calificacion-notable {
+    background: #d1ecf1;
+    color: #0c5460;
+}
+
+.calificacion-bueno {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.calificacion-suficiente {
+    background: #e2e3e5;
+    color: #383d41;
+}
+
+.calificacion-insuficiente {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+.estado-aprobado {
+    background: #28a745;
+    color: white;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    display: inline-block;
+}
+
+.estado-reprobado {
+    background: #dc3545;
+    color: white;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    display: inline-block;
+}
+
+.estado-cursando {
+    background: #ffc107;
+    color: #856404;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    display: inline-block;
+}
+
+/* ========== LEYENDA ========== */
+.legend-container .card-body {
+    padding: 15px 20px;
+}
+
+.legend-container .row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.badge-excelente, .badge-notable, .badge-bueno, 
+.badge-suficiente, .badge-insuficiente, 
+.badge-aprobado, .badge-reprobado, .badge-cursando {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    margin-right: 8px;
+}
+
+.badge-excelente { background: #d4edda; color: #155724; }
+.badge-notable { background: #d1ecf1; color: #0c5460; }
+.badge-bueno { background: #fff3cd; color: #856404; }
+.badge-suficiente { background: #e2e3e5; color: #383d41; }
+.badge-insuficiente { background: #f8d7da; color: #721c24; }
+.badge-aprobado { background: #28a745; color: white; }
+.badge-reprobado { background: #dc3545; color: white; }
+.badge-cursando { background: #ffc107; color: #856404; }
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 992px) {
+    .credits-summary .row {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 15px;
+    }
+}
+
+@media (max-width: 768px) {
+    .back-button-container {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .btn-export-group {
+        justify-content: center;
+    }
+    
+    .kardex-header .row {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .folio-info {
+        text-align: center;
+        margin-top: 15px;
+    }
+    
+    .credits-summary .row {
+        grid-template-columns: 1fr;
+    }
+    
+    #kardexTable {
+        font-size: 0.75rem;
+    }
+    
+    #kardexTable th, #kardexTable td {
+        padding: 6px;
+    }
+}
+
+@media print {
+    .back-button-container, .btn-export-group, .legend-container {
+        display: none;
+    }
+    
+    .kardex-container {
+        padding: 0;
+        margin: 0;
+    }
+    
+    .kardex-header {
+        background: #1e3c72;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+    
+    #kardexTable th {
+        background: #1e3c72;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+}
+
+/* ========== SCROLLBAR ========== */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f0f0f0;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+    border-radius: 10px;
+}

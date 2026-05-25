@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administrar Materias - Mi Universidad</title>
+    <link rel="stylesheet" href="admin-materias.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="admin-materias.css">
+<link rel="stylesheet" href="dark-mode.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Botón de regreso -->
+    <div class="back-button-container">
+        <button class="btn-back" onclick="goBackToDashboard()">
+            <i class="fas fa-arrow-left"></i> Volver al Dashboard
+        </button>
+        <div class="btn-export-group">
+            <button class="btn-export-excel" onclick="exportarExcel()">
+                <i class="fas fa-file-excel"></i> Exportar Excel
+            </button>
+            <button class="btn-export-pdf" onclick="exportarPDF()">
+                <i class="fas fa-file-pdf"></i> Exportar PDF
+            </button>
+            <button class="btn-export-print" onclick="imprimirLista()">
+                <i class="fas fa-print"></i> Imprimir
+            </button>
+        </div>
+    </div>
+
+    <div class="container admin-materias-container py-4">
+        <!-- Título -->
+        <div class="page-header mb-4">
+            <h2><i class="fas fa-book"></i> Administración de Materias</h2>
+            <p>Gestiona el catálogo de materias del plan de estudios</p>
+        </div>
+
+        <!-- Barra de acciones -->
+        <div class="actions-bar mb-4">
+            <button class="btn-nueva-materia" onclick="abrirModalCrear()">
+                <i class="fas fa-plus-circle"></i> Nueva Materia
+            </button>
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" id="searchMateria" placeholder="Buscar por nombre, código o carrera..." onkeyup="filtrarMaterias()">
+            </div>
+        </div>
+
+        <!-- Filtros -->
+        <div class="filters-bar mb-4">
+            <div class="row">
+                <div class="col-md-3 mb-2 mb-md-0">
+                    <select id="filterCarrera" class="form-select" onchange="filtrarMaterias()">
+                        <option value="todos">Todas las carreras</option>
+                        <option value="Ingeniería en Sistemas">Ingeniería en Sistemas</option>
+                        <option value="Administración">Administración</option>
+                        <option value="Derecho">Derecho</option>
+                        <option value="Psicología">Psicología</option>
+                    </select>
+                </div>
+                <div class="col-md-3 mb-2 mb-md-0">
+                    <select id="filterSemestre" class="form-select" onchange="filtrarMaterias()">
+                        <option value="todos">Todos los semestres</option>
+                        <option value="1">1er Semestre</option>
+                        <option value="2">2do Semestre</option>
+                        <option value="3">3er Semestre</option>
+                        <option value="4">4to Semestre</option>
+                        <option value="5">5to Semestre</option>
+                        <option value="6">6to Semestre</option>
+                        <option value="7">7mo Semestre</option>
+                        <option value="8">8vo Semestre</option>
+                        <option value="9">9no Semestre</option>
+                    </select>
+                </div>
+                <div class="col-md-3 mb-2 mb-md-0">
+                    <select id="filterTipo" class="form-select" onchange="filtrarMaterias()">
+                        <option value="todos">Todos los tipos</option>
+                        <option value="Obligatoria">Obligatoria</option>
+                        <option value="Optativa">Optativa</option>
+                        <option value="Laboratorio">Laboratorio</option>
+                        <option value="Taller">Taller</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <button class="btn-limpiar w-100" onclick="limpiarFiltros()">
+                        <i class="fas fa-eraser"></i> Limpiar Filtros
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Estadísticas rápidas -->
+        <div class="stats-mini-grid mb-4">
+            <div class="stat-mini-card">
+                <i class="fas fa-book"></i>
+                <div>
+                    <h4 id="totalMaterias">0</h4>
+                    <p>Total Materias</p>
+                </div>
+            </div>
+            <div class="stat-mini-card">
+                <i class="fas fa-graduation-cap"></i>
+                <div>
+                    <h4 id="totalCarreras">0</h4>
+                    <p>Carreras</p>
+                </div>
+            </div>
+            <div class="stat-mini-card">
+                <i class="fas fa-chart-line"></i>
+                <div>
+                    <h4 id="promedioCreditos">0</h4>
+                    <p>Promedio Créditos</p>
+                </div>
+            </div>
+            <div class="stat-mini-card">
+                <i class="fas fa-check-circle"></i>
+                <div>
+                    <h4 id="materiasActivas">0</h4>
+                    <p>Activas</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tabla de materias -->
+        <div class="table-container">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0"><i class="fas fa-list"></i> Catálogo de Materias</h5>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover" id="materiasTable">
+                            <thead>
+                                <tr>
+                                    <th>Código</th>
+                                    <th>Nombre</th>
+                                    <th>Créditos</th>
+                                    <th>Semestre</th>
+                                    <th>Carrera</th>
+                                    <th>Tipo</th>
+                                    <th>Estado</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody id="materiasTableBody">
+                                <!-- Materias cargadas dinámicamente -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Paginación -->
+        <div class="pagination-container mt-4">
+            <nav>
+                <ul class="pagination justify-content-center" id="pagination">
+                    <!-- Paginación dinámica -->
+                </ul>
+            </nav>
+        </div>
+    </div>
+
+    <!-- ========== MODAL CREAR/EDITAR MATERIA ========== -->
+    <div class="modal fade" id="materiaModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title" id="modalTitulo"><i class="fas fa-plus-circle"></i> Crear Materia</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="materiaId">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label><i class="fas fa-code"></i> Código</label>
+                            <input type="text" class="form-control" id="codigo" required placeholder="Ej: MAT-101">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label><i class="fas fa-book"></i> Nombre de la Materia</label>
+                            <input type="text" class="form-control" id="nombre" required placeholder="Ej: Matemáticas I">
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label><i class="fas fa-star"></i> Créditos</label>
+                            <input type="number" class="form-control" id="creditos" required min="1" max="12" placeholder="Ej: 5">
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label><i class="fas fa-layer-group"></i> Semestre</label>
+                            <select class="form-control" id="semestre" required>
+                                <option value="">Seleccionar semestre</option>
+                                <option value="1">1er Semestre</option>
+                                <option value="2">2do Semestre</option>
+                                <option value="3">3er Semestre</option>
+                                <option value="4">4to Semestre</option>
+                                <option value="5">5to Semestre</option>
+                                <option value="6">6to Semestre</option>
+                                <option value="7">7mo Semestre</option>
+                                <option value="8">8vo Semestre</option>
+                                <option value="9">9no Semestre</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label><i class="fas fa-tag"></i> Tipo</label>
+                            <select class="form-control" id="tipo" required>
+                                <option value="Obligatoria">Obligatoria</option>
+                                <option value="Optativa">Optativa</option>
+                                <option value="Laboratorio">Laboratorio</option>
+                                <option value="Taller">Taller</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label><i class="fas fa-graduation-cap"></i> Carrera</label>
+                            <select class="form-control" id="carrera" required>
+                                <option value="">Seleccionar carrera</option>
+                                <option value="Ingeniería en Sistemas">Ingeniería en Sistemas</option>
+                                <option value="Administración">Administración</option>
+                                <option value="Derecho">Derecho</option>
+                                <option value="Psicología">Psicología</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label><i class="fas fa-flag-checkered"></i> Estado</label>
+                            <select class="form-control" id="estado">
+                                <option value="activo">Activo</option>
+                                <option value="inactivo">Inactivo</option>
+                            </select>
+                        </div>
+                        <div class="col-12 mb-3">
+                            <label><i class="fas fa-align-left"></i> Descripción</label>
+                            <textarea class="form-control" id="descripcion" rows="3" placeholder="Descripción de la materia..."></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" onclick="guardarMateria()">Guardar Materia</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de vista rápida -->
+    <div class="modal fade" id="viewModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header bg-info text-white">
+                    <h5 class="modal-title"><i class="fas fa-info-circle"></i> Detalles de la Materia</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body" id="viewModalBody">
+                    <!-- Detalles de la materia -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de confirmación -->
+    <div class="modal fade" id="confirmModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header" id="confirmModalHeader">
+                    <h5 class="modal-title"><i class="fas fa-check-circle"></i> Éxito</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body" id="confirmModalMessage">
+                    Acción realizada correctamente
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Aceptar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.sheetjs.com/xlsx-0.20.2/package/dist/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="admin-materias.js"></script>
+    <script src="dark-mode.js"></script>
+</body>
+</html>

@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kardex Académico - Mi Universidad</title>
+    <link rel="stylesheet" href="kardex.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="kardex.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="dark-mode.css">
+    <script src="kardex.js"></script>
+</head>
+<body>
+    <!-- Botón de regreso -->
+    <div class="back-button-container">
+        <button class="btn-back" onclick="goBackToDashboard()">
+            <i class="fas fa-arrow-left"></i> Volver al Dashboard
+        </button>
+        <div class="btn-export-group">
+            <button class="btn-export-pdf" onclick="exportarPDF()">
+                <i class="fas fa-file-pdf"></i> Exportar PDF
+            </button>
+            <button class="btn-export-excel" onclick="exportarExcel()">
+                <i class="fas fa-file-excel"></i> Exportar Excel
+            </button>
+            <button class="btn-export-print" onclick="imprimirKardex()">
+                <i class="fas fa-print"></i> Imprimir
+            </button>
+        </div>
+    </div>
+
+    <div class="container kardex-container py-4" id="kardexContent">
+        <!-- Encabezado del Kardex -->
+        <div class="kardex-header">
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="university-info">
+                        <i class="fas fa-university"></i>
+                        <h2>Mi Universidad</h2>
+                        <p>Sistema de Gestión Académica</p>
+                    </div>
+                </div>
+                <div class="col-md-4 text-end">
+                    <div class="folio-info">
+                        <p><strong>Fecha de emisión:</strong> <span id="fechaEmision"></span></p>
+                        <p><strong>Folio:</strong> <span id="folioKardex"></span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Información del Alumno -->
+        <div class="student-info-card">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0"><i class="fas fa-user-graduate"></i> Información del Alumno</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <label><i class="fas fa-user"></i> Nombre Completo</label>
+                        <input type="text" class="form-control" id="nombreAlumno" readonly>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <label><i class="fas fa-id-card"></i> Matrícula</label>
+                        <input type="text" class="form-control" id="matriculaAlumno" readonly>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <label><i class="fas fa-graduation-cap"></i> Carrera</label>
+                        <input type="text" class="form-control" id="carreraAlumno" readonly>
+                    </div>
+                    <div class="col-md-2 mb-3">
+                        <label><i class="fas fa-calendar-alt"></i> Semestre</label>
+                        <input type="text" class="form-control" id="semestreAlumno" readonly>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label><i class="fas fa-envelope"></i> Correo Electrónico</label>
+                        <input type="text" class="form-control" id="emailAlumno" readonly>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label><i class="fas fa-phone"></i> Teléfono</label>
+                        <input type="text" class="form-control" id="telefonoAlumno" readonly>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label><i class="fas fa-user-tie"></i> Tutor</label>
+                        <input type="text" class="form-control" id="tutorAlumno" readonly>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Resumen de créditos -->
+        <div class="credits-summary">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="summary-card">
+                        <i class="fas fa-certificate"></i>
+                        <div>
+                            <h3 id="totalCreditos">0</h3>
+                            <p>Créditos Totales</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="summary-card">
+                        <i class="fas fa-check-circle"></i>
+                        <div>
+                            <h3 id="creditosAprobados">0</h3>
+                            <p>Créditos Aprobados</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="summary-card">
+                        <i class="fas fa-chart-line"></i>
+                        <div>
+                            <h3 id="promedioGeneral">0.00</h3>
+                            <p>Promedio General</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="summary-card">
+                        <i class="fas fa-trophy"></i>
+                        <div>
+                            <h3 id="porcentajeAvance">0%</h3>
+                            <p>Porcentaje de Avance</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tabla del Kardex -->
+        <div class="kardex-table-container">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0"><i class="fas fa-scroll"></i> Historial Académico</h5>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-bordered" id="kardexTable">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Semestre</th>
+                            <th>Código</th>
+                            <th>Materia</th>
+                            <th>Créditos</th>
+                            <th>Calificación</th>
+                            <th>Letra</th>
+                            <th>Estado</th>
+                        </tr>
+                    </thead>
+                    <tbody id="kardexBody">
+                        <!-- Datos del kardex -->
+                    </tbody>
+                    <tfoot class="table-light">
+                        <tr>
+                            <td colspan="3"><strong>Totales</strong></td>
+                            <td id="footerCreditos"><strong>0</strong></td>
+                            <td id="footerPromedio"><strong>0.00</strong></td>
+                            <td colspan="2"></td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+
+        <!-- Leyenda de calificaciones -->
+        <div class="legend-container">
+            <div class="card-header bg-secondary text-white">
+                <h6 class="mb-0"><i class="fas fa-info-circle"></i> Leyenda de Calificaciones</h6>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-3">
+                        <span class="badge-excelente">90-100</span> Excelente
+                    </div>
+                    <div class="col-md-3">
+                        <span class="badge-notable">80-89</span> Notable
+                    </div>
+                    <div class="col-md-3">
+                        <span class="badge-bueno">70-79</span> Bueno
+                    </div>
+                    <div class="col-md-3">
+                        <span class="badge-suficiente">60-69</span> Suficiente
+                    </div>
+                    <div class="col-md-3">
+                        <span class="badge-insuficiente">0-59</span> Insuficiente
+                    </div>
+                    <div class="col-md-3">
+                        <span class="badge-aprobado">Aprobado</span> Materia Aprobada
+                    </div>
+                    <div class="col-md-3">
+                        <span class="badge-reprobado">Reprobado</span> Materia Reprobada
+                    </div>
+                    <div class="col-md-3">
+                        <span class="badge-cursando">Cursando</span> En curso
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de confirmación -->
+    <div class="modal fade" id="confirmModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header" id="confirmModalHeader">
+                    <h5 class="modal-title"><i class="fas fa-check-circle"></i> Éxito</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body" id="confirmModalMessage">
+                    Archivo exportado correctamente
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Aceptar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="https://cdn.sheetjs.com/xlsx-0.20.2/package/dist/xlsx.full.min.js"></script>
+    <script src="kardex.js"></script>
+    <script src="dark-mode.js"></script>
+</body>
+</html>

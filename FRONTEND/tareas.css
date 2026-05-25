@@ -1,0 +1,444 @@
+/* ============================================
+   TAREAS - MI UNIVERSIDAD
+   ============================================ */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: #f0f2f5;
+    min-height: 100vh;
+}
+
+/* ========== BOTÓN DE REGRESO ========== */
+.back-button-container {
+    padding: 15px 20px 0 20px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.btn-back {
+    background: linear-gradient(135deg, #6c757d 0%, #5a6268 100%);
+    color: white;
+    border: none;
+    padding: 10px 25px;
+    border-radius: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.9rem;
+}
+
+.btn-back:hover {
+    transform: translateX(-5px);
+    box-shadow: 0 5px 15px rgba(108, 117, 125, 0.4);
+}
+
+/* ========== CONTENEDOR PRINCIPAL ========== */
+.tareas-container {
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.page-header h2 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #1e3c72;
+    margin-bottom: 5px;
+}
+
+.page-header p {
+    color: #666;
+    margin: 0;
+}
+
+/* ========== TABS ========== */
+.nav-tabs {
+    border-bottom: 2px solid #e0e0e0;
+    gap: 5px;
+}
+
+.nav-tabs .nav-link {
+    border: none;
+    border-radius: 12px;
+    padding: 10px 25px;
+    font-weight: 500;
+    color: #666;
+    transition: all 0.3s;
+    cursor: pointer;
+    position: relative;
+}
+
+.nav-tabs .nav-link:hover {
+    background: #f0f2f5;
+    color: #1e3c72;
+}
+
+.nav-tabs .nav-link.active {
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+    color: white;
+}
+
+.badge-pendiente {
+    background: #dc3545;
+    color: white;
+    border-radius: 20px;
+    padding: 2px 8px;
+    font-size: 0.7rem;
+    margin-left: 8px;
+}
+
+/* ========== BARRA DE BÚSQUEDA ========== */
+.search-filter-bar {
+    background: white;
+    padding: 20px;
+    border-radius: 16px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.search-box {
+    position: relative;
+}
+
+.search-box i {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #999;
+}
+
+.search-box input {
+    width: 100%;
+    padding: 12px 15px 12px 45px;
+    border: 2px solid #e0e0e0;
+    border-radius: 12px;
+    font-family: 'Poppins', sans-serif;
+    transition: all 0.3s;
+}
+
+.search-box input:focus {
+    outline: none;
+    border-color: #1e3c72;
+    box-shadow: 0 0 0 3px rgba(30, 60, 114, 0.1);
+}
+
+.form-select {
+    border-radius: 12px;
+    border: 2px solid #e0e0e0;
+    padding: 12px 15px;
+    font-family: 'Poppins', sans-serif;
+    cursor: pointer;
+}
+
+/* ========== TARJETAS DE TAREAS ========== */
+.tarea-card {
+    background: white;
+    border-radius: 16px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s;
+    animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.tarea-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+.tarea-card.urgente {
+    border-left: 4px solid #dc3545;
+}
+
+.tarea-card.proximo {
+    border-left: 4px solid #ffc107;
+}
+
+.tarea-card.normal {
+    border-left: 4px solid #28a745;
+}
+
+.tarea-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 12px;
+}
+
+.tarea-header h5 {
+    font-weight: 700;
+    margin: 0;
+    color: #333;
+    font-size: 1.1rem;
+}
+
+.tarea-materia {
+    background: #1e3c72;
+    color: white;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.7rem;
+    font-weight: 600;
+}
+
+.tarea-meta {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 12px;
+    font-size: 0.8rem;
+    color: #666;
+    flex-wrap: wrap;
+}
+
+.tarea-meta i {
+    width: 20px;
+    color: #1e3c72;
+}
+
+.tarea-descripcion {
+    color: #555;
+    font-size: 0.85rem;
+    margin-bottom: 15px;
+    line-height: 1.5;
+}
+
+.tarea-archivos {
+    margin-bottom: 15px;
+}
+
+.tarea-archivos a {
+    color: #1e3c72;
+    text-decoration: none;
+    font-size: 0.8rem;
+    margin-right: 15px;
+}
+
+.tarea-archivos a:hover {
+    text-decoration: underline;
+}
+
+.fecha-entrega {
+    font-size: 0.75rem;
+    color: #dc3545;
+    font-weight: 600;
+    margin-top: 10px;
+}
+
+.btn-entregar {
+    background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+    color: white;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 10px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: all 0.3s;
+    width: 100%;
+}
+
+.btn-entregar:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(40, 167, 69, 0.4);
+}
+
+.btn-revisar {
+    background: linear-gradient(135deg, #17a2b8 0%, #138496 100%);
+    color: white;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 10px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: all 0.3s;
+    width: 100%;
+}
+
+.btn-revisar:hover {
+    transform: translateY(-2px);
+}
+
+.btn-ver-entrega {
+    background: linear-gradient(135deg, #6c757d 0%, #5a6268 100%);
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 10px;
+    font-size: 0.8rem;
+    margin-right: 10px;
+}
+
+.btn-calificar-entrega {
+    background: linear-gradient(135deg, #ffc107 0%, #e0a800 100%);
+    color: #856404;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 10px;
+    font-size: 0.8rem;
+}
+
+/* ========== TABLA DE ENTREGAS ========== */
+.table {
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+}
+
+.table th {
+    background: #1e3c72;
+    color: white;
+    font-weight: 600;
+    padding: 12px;
+    border: none;
+}
+
+.table td {
+    padding: 12px;
+    vertical-align: middle;
+}
+
+.calificacion-badge {
+    display: inline-block;
+    padding: 5px 12px;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 0.85rem;
+}
+
+.calificacion-aprobada {
+    background: #d4edda;
+    color: #155724;
+}
+
+.calificacion-reprobada {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+.calificacion-pendiente {
+    background: #fff3cd;
+    color: #856404;
+}
+
+/* ========== FORMULARIOS ========== */
+.card {
+    background: white;
+    border-radius: 20px;
+    border: none;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+}
+
+.card-header {
+    padding: 15px 20px;
+    border-bottom: none;
+}
+
+.card-header.bg-primary {
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+}
+
+.card-body {
+    padding: 25px;
+}
+
+.form-control, .form-select {
+    border-radius: 12px;
+    border: 2px solid #e0e0e0;
+    padding: 10px 15px;
+    font-family: 'Poppins', sans-serif;
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: #1e3c72;
+    box-shadow: 0 0 0 3px rgba(30, 60, 114, 0.1);
+    outline: none;
+}
+
+label {
+    font-weight: 500;
+    margin-bottom: 8px;
+    color: #333;
+    font-size: 0.9rem;
+}
+
+label i {
+    margin-right: 8px;
+    color: #1e3c72;
+}
+
+/* ========== MODALES ========== */
+.modal-content {
+    border-radius: 20px;
+    overflow: hidden;
+}
+
+.modal-header {
+    border: none;
+}
+
+.modal-header.bg-success {
+    background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+}
+
+.modal-header.bg-warning {
+    background: linear-gradient(135deg, #ffc107 0%, #e0a800 100%);
+}
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 768px) {
+    .back-button-container {
+        padding: 10px 15px 0 15px;
+    }
+    
+    .page-header h2 {
+        font-size: 1.4rem;
+    }
+    
+    .nav-tabs .nav-link {
+        padding: 8px 15px;
+        font-size: 0.85rem;
+    }
+    
+    .tarea-meta {
+        flex-direction: column;
+        gap: 5px;
+    }
+    
+    .btn-entregar, .btn-revisar {
+        width: 100%;
+    }
+}
+
+/* ========== SCROLLBAR ========== */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f0f0f0;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+    border-radius: 10px;
+}

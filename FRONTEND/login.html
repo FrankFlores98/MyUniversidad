@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Universidad - Iniciar Sesión</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Partículas de fondo */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: float 15s infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-100px) rotate(180deg); }
+        }
+
+        /* Contenedor principal */
+        .login-container {
+            position: relative;
+            z-index: 1;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        /* Tarjeta de login */
+        .login-card {
+            background: rgba(255, 255, 255, 0.98);
+            border-radius: 30px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+            width: 100%;
+            max-width: 480px;
+            animation: slideUp 0.6s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Header */
+        .login-header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 40px;
+            text-align: center;
+            position: relative;
+        }
+
+        .login-header .logo {
+            width: 80px;
+            height: 80px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 40px;
+            transition: transform 0.3s;
+        }
+
+        .login-header .logo:hover {
+            transform: scale(1.1);
+        }
+
+        .login-header h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .login-header p {
+            opacity: 0.9;
+            font-size: 0.9rem;
+        }
+
+        /* Modo oscuro button en header */
+        .dark-mode-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .dark-mode-toggle:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.1);
+        }
+
+        /* Cuerpo del formulario */
+        .login-body {
+            padding: 40px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+            font-size: 0.9rem;
+        }
+
+        .form-group label i {
+            margin-right: 8px;
+            color: #1e3c72;
+        }
+
+        .input-group {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .input-group i.input-icon {
+            position: absolute;
+            left: 15px;
+            color: #999;
+            font-size: 1rem;
+            z-index: 1;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 14px 15px 14px 45px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            font-size: 14px;
+            transition: all 0.3s;
+            font-family: 'Poppins', sans-serif;
+            background: #fafbfc;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #1e3c72;
+            box-shadow: 0 0 0 3px rgba(30, 60, 114, 0.1);
+            background: white;
+        }
+
+        /* Botón mostrar/ocultar contraseña */
+        .toggle-password {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: #999;
+            cursor: pointer;
+            font-size: 1rem;
+            z-index: 1;
+        }
+
+        .toggle-password:hover {
+            color: #1e3c72;
+        }
+
+        /* Detección de rol */
+        .rol-detection {
+            background: #f0f2f5;
+            border-radius: 12px;
+            padding: 12px 15px;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.85rem;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .rol-detection i {
+            font-size: 1.2rem;
+        }
+
+        .rol-detection .rol-valido {
+            color: #28a745;
+            font-weight: 600;
+        }
+
+        .rol-detection .rol-invalido {
+            color: #dc3545;
+            font-weight: 600;
+        }
+
+        /* Checkbox recordar */
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 25px;
+        }
+
+        .checkbox-group label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 400;
+            font-size: 0.85rem;
+            cursor: pointer;
+        }
+
+        .checkbox-group input {
+            width: auto;
+            margin: 0;
+        }
+
+        .checkbox-group a {
+            color: #1e3c72;
+            text-decoration: none;
+            font-size: 0.85rem;
+        }
+
+        .checkbox-group a:hover {
+            text-decoration: underline;
+        }
+
+        /* Botón login */
+        .btn-login {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn-login:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(30, 60, 114, 0.4);
+        }
+
+        .btn-login:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Enlaces footer */
+        .login-footer {
+            text-align: center;
+            margin-top: 25px;
+        }
+
+        .login-footer a {
+            color: #1e3c72;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s;
+            display: inline-block;
+            margin: 5px 0;
+        }
+
+        .login-footer a:hover {
+            color: #2a5298;
+            text-decoration: underline;
+        }
+
+        /* Alertas */
+        .alert-custom {
+            padding: 12px 15px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .alert-error {
+            background: linear-gradient(135deg, #fee 0%, #fdd 100%);
+            color: #c33;
+            border-left: 4px solid #c33;
+        }
+
+        .alert-success {
+            background: linear-gradient(135deg, #efe 0%, #dfd 100%);
+            color: #3c3;
+            border-left: 4px solid #3c3;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Modo oscuro */
+        body.dark-mode {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+        }
+
+        body.dark-mode .login-card {
+            background: #16213e;
+        }
+
+        body.dark-mode .form-group label {
+            color: #ddd;
+        }
+
+        body.dark-mode .form-group input {
+            background: #0f0f23;
+            border-color: #2a2a4a;
+            color: #eee;
+        }
+
+        body.dark-mode .form-group input:focus {
+            border-color: #4facfe;
+        }
+
+        body.dark-mode .rol-detection {
+            background: #0f0f23;
+            color: #ddd;
+        }
+
+        body.dark-mode .checkbox-group label {
+            color: #ddd;
+        }
+
+        body.dark-mode .login-footer a {
+            color: #4facfe;
+        }
+
+        /* Responsive */
+        @media (max-width: 576px) {
+            .login-header {
+                padding: 30px;
+            }
+            
+            .login-header .logo {
+                width: 60px;
+                height: 60px;
+                font-size: 30px;
+            }
+            
+            .login-header h1 {
+                font-size: 1.5rem;
+            }
+            
+            .login-body {
+                padding: 30px;
+            }
+        }
+
+        /* Loading spinner */
+        .spinner-border-sm {
+            width: 1rem;
+            height: 1rem;
+            border-width: 0.15em;
+        }
+    </style>
+</head>
+<body>
+    <div class="particles" id="particles"></div>
+
+    <div class="login-container">
+        <div class="login-card">
+            <div class="login-header">
+                <button class="dark-mode-toggle" onclick="toggleDarkMode()" id="darkModeBtn">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <div class="logo">
+                    <i class="fas fa-graduation-cap"></i>
+                </div>
+                <h1>Mi Universidad</h1>
+                <p>Sistema de Gestión Académica</p>
+            </div>
+            <div class="login-body">
+                <div id="alertContainer"></div>
+                
+                <form id="loginForm">
+                    <div class="form-group">
+                        <label><i class="fas fa-user"></i> Nombre de Usuario</label>
+                        <div class="input-group">
+                            <i class="fas fa-user input-icon"></i>
+                            <input type="text" id="nombreUsuario" placeholder="Ej: Juan Pérez García" autocomplete="off" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label><i class="fas fa-id-card"></i> Matrícula</label>
+                        <div class="input-group">
+                            <i class="fas fa-id-card input-icon"></i>
+                            <input type="text" id="matricula" placeholder="Ej: 202423" autocomplete="off" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label><i class="fas fa-lock"></i> Contraseña</label>
+                        <div class="input-group">
+                            <i class="fas fa-lock input-icon"></i>
+                            <input type="password" id="password" placeholder="Ingresa tu contraseña" required>
+                            <button type="button" class="toggle-password" onclick="togglePasswordVisibility()">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Detección de rol en tiempo real -->
+                    <div id="rolDetection" class="rol-detection" style="display: none;">
+                        <i class="fas fa-tag"></i>
+                        <span>Rol detectado: <span id="rolDetectadoTexto">---</span></span>
+                    </div>
+
+                    <div class="checkbox-group">
+                        <label>
+                            <input type="checkbox" id="rememberUser"> Recordar usuario
+                        </label>
+                        <a href="#" onclick="showForgotPassword()">¿Olvidaste tu contraseña?</a>
+                    </div>
+                    
+                    <button type="submit" class="btn-login" id="loginBtn">
+                        <i class="fas fa-sign-in-alt"></i> Iniciar Sesión
+                    </button>
+                </form>
+
+                <div class="login-footer">
+                    <a href="#" onclick="showRegister()">¿No tienes cuenta? Regístrate</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de recuperación -->
+    <div class="modal fade" id="forgotModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header" style="background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); color: white;">
+                    <h5 class="modal-title"><i class="fas fa-key"></i> Recuperar Contraseña</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="forgotAlert"></div>
+                    <div class="form-group">
+                        <label><i class="fas fa-user"></i> Nombre de Usuario</label>
+                        <input type="text" id="forgotNombre" class="form-control" placeholder="Tu nombre completo">
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-envelope"></i> Correo Electrónico</label>
+                        <input type="email" id="forgotEmail" class="form-control" placeholder="tuemail@universidad.edu">
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-id-card"></i> Matrícula</label>
+                        <input type="text" id="forgotMatricula" class="form-control" placeholder="Tu matrícula">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" onclick="sendRecovery()">Enviar enlace de recuperación</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de registro -->
+    <div class="modal fade" id="registerModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header" style="background: linear-gradient(135deg, #28a745 0%, #20c997 100%); color: white;">
+                    <h5 class="modal-title"><i class="fas fa-user-plus"></i> Registro de Usuario</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="registerAlert"></div>
+                    <div class="form-group">
+                        <label><i class="fas fa-user"></i> Nombre Completo</label>
+                        <input type="text" id="regNombre" class="form-control" placeholder="Ej: Juan Pérez García" required>
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-envelope"></i> Correo Electrónico</label>
+                        <input type="email" id="regEmail" class="form-control" placeholder="ejemplo@universidad.edu" required>
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-id-card"></i> Matrícula</label>
+                        <input type="text" id="regMatricula" class="form-control" placeholder="Ej: 202423" required>
+                        <small style="color: #666; font-size: 12px;">Terminación: 23=Alumno, 24=Maestro, 25=Admin, 26=Directivo</small>
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-tag"></i> Rol detectado</label>
+                        <input type="text" id="regRol" class="form-control" readonly style="background: #f5f5f5;">
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-lock"></i> Contraseña</label>
+                        <input type="password" id="regPassword" class="form-control" placeholder="Mínimo 6 caracteres" required>
+                    </div>
+                    <div class="form-group">
+                        <label><i class="fas fa-check-circle"></i> Confirmar Contraseña</label>
+                        <input type="password" id="regConfirmPassword" class="form-control" placeholder="Repite tu contraseña" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-success" onclick="registerUser()">Registrarse</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // ============================================
+        // LOGIN JS - MI UNIVERSIDAD (CONECTADO AL BACKEND)
+        // ============================================
+
+        const API_URL = 'http://localhost:5000/api';
+
+        // Generar partículas de fondo
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            for (let i = 0; i < 50; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                const size = Math.random() * 100 + 50;
+                particle.style.width = size + 'px';
+                particle.style.height = size + 'px';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 20 + 's';
+                particle.style.animationDuration = Math.random() * 20 + 10 + 's';
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // Detectar rol por matrícula
+        function detectarRol(matricula) {
+            if (!matricula || matricula.length < 2) return null;
+            const terminacion = matricula.slice(-2);
+            const roles = {
+                '23': { nombre: 'Alumno', valor: 'alumno' },
+                '24': { nombre: 'Maestro', valor: 'maestro' },
+                '25': { nombre: 'Administrativo', valor: 'administrativo' },
+                '26': { nombre: 'Directivo', valor: 'directivo' }
+            };
+            return roles[terminacion] || null;
+        }
+
+        // Mostrar alertas
+        function showAlert(message, type, containerId = 'alertContainer') {
+            const container = document.getElementById(containerId);
+            if (!container) return;
+            const alertClass = type === 'error' ? 'alert-error' : 'alert-success';
+            const icon = type === 'error' ? 'fa-exclamation-triangle' : 'fa-check-circle';
+            container.innerHTML = `<div class="alert-custom ${alertClass}"><i class="fas ${icon}"></i> ${message}</div>`;
+            setTimeout(() => container.innerHTML = '', 5000);
+        }
+
+        // Guardar datos del usuario
+        function saveUserData(userData, token) {
+            localStorage.setItem('token', token);
+            localStorage.setItem('user', JSON.stringify(userData));
+            localStorage.setItem('userNombre', userData.nombre);
+            localStorage.setItem('userEmail', userData.email);
+            localStorage.setItem('userMatricula', userData.matricula);
+            localStorage.setItem('userRol', userData.rol);
+            localStorage.setItem('userId', userData.id);
+            
+            if (document.getElementById('rememberUser').checked) {
+                localStorage.setItem('rememberedUser', userData.matricula);
+                localStorage.setItem('rememberedNombre', userData.nombre);
+            } else {
+                localStorage.removeItem('rememberedUser');
+                localStorage.removeItem('rememberedNombre');
+            }
+        }
+
+        // Cargar usuario recordado
+        function loadRememberedUser() {
+            const rememberedMatricula = localStorage.getItem('rememberedUser');
+            const rememberedNombre = localStorage.getItem('rememberedNombre');
+            if (rememberedMatricula) {
+                document.getElementById('matricula').value = rememberedMatricula;
+                document.getElementById('nombreUsuario').value = rememberedNombre || '';
+                document.getElementById('rememberUser').checked = true;
+                const rol = detectarRol(rememberedMatricula);
+                if (rol) {
+                    document.getElementById('rolDetection').style.display = 'flex';
+                    document.getElementById('rolDetectadoTexto').innerHTML = `<span class="rol-valido">${rol.nombre}</span>`;
+                }
+            }
+        }
+
+        // Detectar rol en tiempo real
+        function setupRolDetection() {
+            const matriculaInput = document.getElementById('matricula');
+            const rolDetectionDiv = document.getElementById('rolDetection');
+            const rolTexto = document.getElementById('rolDetectadoTexto');
+            
+            matriculaInput.addEventListener('input', function() {
+                const rol = detectarRol(this.value);
+                if (rol) {
+                    rolDetectionDiv.style.display = 'flex';
+                    rolTexto.innerHTML = `<span class="rol-valido">${rol.nombre}</span>`;
+                } else if (this.value.length >= 2) {
+                    rolDetectionDiv.style.display = 'flex';
+                    rolTexto.innerHTML = `<span class="rol-invalido">No válido (debe terminar en 23,24,25,26)</span>`;
+                } else {
+                    rolDetectionDiv.style.display = 'none';
+                }
+            });
+        }
+
+        // Toggle password visibility
+        function togglePasswordVisibility() {
+            const passwordInput = document.getElementById('password');
+            const toggleBtn = document.querySelector('.toggle-password i');
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                toggleBtn.classList.remove('fa-eye');
+                toggleBtn.classList.add('fa-eye-slash');
+            } else {
+                passwordInput.type = 'password';
+                toggleBtn.classList.remove('fa-eye-slash');
+                toggleBtn.classList.add('fa-eye');
+            }
+        }
+
+        // Login (CONECTADO AL BACKEND)
+        async function handleLogin(event) {
+            event.preventDefault();
+            
+            const nombre = document.getElementById('nombreUsuario').value.trim();
+            const matricula = document.getElementById('matricula').value.trim();
+            const password = document.getElementById('password').value;
+            
+            if (!nombre) {
+                showAlert('Por favor ingresa tu nombre de usuario', 'error');
+                return;
+            }
+            
+            if (!matricula) {
+                showAlert('Por favor ingresa tu matrícula', 'error');
+                return;
+            }
+            
+            if (!password) {
+                showAlert('Por favor ingresa tu contraseña', 'error');
+                return;
+            }
+            
+            const rol = detectarRol(matricula);
+            if (!rol) {
+                showAlert('Matrícula inválida. Debe terminar en 23, 24, 25 o 26', 'error');
+                return;
+            }
+            
+            const loginBtn = document.getElementById('loginBtn');
+            const originalText = loginBtn.innerHTML;
+            loginBtn.innerHTML = '<span class="spinner-border spinner-border-sm"></span> Iniciando sesión...';
+            loginBtn.disabled = true;
+            
+            try {
+                const response = await fetch(`${API_URL}/auth/login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ matricula, password })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    const userData = {
+                        id: data.user.id,
+                        nombre: nombre,
+                        email: data.user.email,
+                        matricula: data.user.matricula,
+                        rol: data.user.rol
+                    };
+                    saveUserData(userData, data.token);
+                    showAlert(`¡Bienvenido ${nombre}!`, 'success');
+                    setTimeout(() => {
+                        window.location.href = 'dashboard.html';
+                    }, 1500);
+                } else {
+                    showAlert(data.error || 'Credenciales inválidas', 'error');
+                    loginBtn.innerHTML = originalText;
+                    loginBtn.disabled = false;
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                showAlert('Error al conectar con el servidor', 'error');
+                loginBtn.innerHTML = originalText;
+                loginBtn.disabled = false;
+            }
+        }
+
+        // Mostrar modal de registro
+        function showRegister() {
+            document.getElementById('regNombre').value = '';
+            document.getElementById('regEmail').value = '';
+            document.getElementById('regMatricula').value = '';
+            document.getElementById('regPassword').value = '';
+            document.getElementById('regConfirmPassword').value = '';
+            document.getElementById('regRol').value = '';
+            new bootstrap.Modal(document.getElementById('registerModal')).show();
+        }
+
+        // Detectar rol en registro
+        document.getElementById('regMatricula')?.addEventListener('input', function() {
+            const rol = detectarRol(this.value);
+            const rolInput = document.getElementById('regRol');
+            if (rol) {
+                rolInput.value = rol.nombre;
+                rolInput.style.color = '#28a745';
+                rolInput.style.fontWeight = 'bold';
+            } else if (this.value.length >= 2) {
+                rolInput.value = 'No válido';
+                rolInput.style.color = '#dc3545';
+                rolInput.style.fontWeight = 'bold';
+            } else {
+                rolInput.value = '';
+            }
+        });
+
+        // Registrar usuario (CONECTADO AL BACKEND)
+        async function registerUser() {
+            const nombre = document.getElementById('regNombre').value.trim();
+            const email = document.getElementById('regEmail').value.trim();
+            const matricula = document.getElementById('regMatricula').value.trim();
+            const password = document.getElementById('regPassword').value;
+            const confirmPassword = document.getElementById('regConfirmPassword').value;
+            const rolDetectado = document.getElementById('regRol').value;
+            
+            if (!nombre || !email || !matricula || !password) {
+                showAlert('Completa todos los campos', 'error', 'registerAlert');
+                return;
+            }
+            
+            if (password !== confirmPassword) {
+                showAlert('Las contraseñas no coinciden', 'error', 'registerAlert');
+                return;
+            }
+            
+            if (password.length < 6) {
+                showAlert('La contraseña debe tener al menos 6 caracteres', 'error', 'registerAlert');
+                return;
+            }
+            
+            if (rolDetectado === 'No válido' || !rolDetectado) {
+                showAlert('Matrícula inválida. Debe terminar en 23,24,25,26', 'error', 'registerAlert');
+                return;
+            }
+            
+            const registerBtn = document.querySelector('#registerModal .btn-success');
+            const originalText = registerBtn.innerHTML;
+            registerBtn.innerHTML = '<span class="spinner-border spinner-border-sm"></span> Registrando...';
+            registerBtn.disabled = true;
+            
+            try {
+                const response = await fetch(`${API_URL}/auth/register`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ nombre, email, matricula, password })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    showAlert('¡Registro exitoso! Ahora puedes iniciar sesión', 'success', 'registerAlert');
+                    setTimeout(() => {
+                        const modal = bootstrap.Modal.getInstance(document.getElementById('registerModal'));
+                        if (modal) modal.hide();
+                        document.getElementById('nombreUsuario').value = nombre;
+                        document.getElementById('matricula').value = matricula;
+                        document.getElementById('registerAlert').innerHTML = '';
+                    }, 1500);
+                } else {
+                    showAlert(data.error || 'Error al registrar usuario', 'error', 'registerAlert');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                showAlert('Error al conectar con el servidor', 'error', 'registerAlert');
+            } finally {
+                registerBtn.innerHTML = originalText;
+                registerBtn.disabled = false;
+            }
+        }
+
+        // Mostrar modal de recuperación
+        function showForgotPassword() {
+            document.getElementById('forgotNombre').value = '';
+            document.getElementById('forgotEmail').value = '';
+            document.getElementById('forgotMatricula').value = '';
+            new bootstrap.Modal(document.getElementById('forgotModal')).show();
+        }
+
+        // Enviar recuperación
+        function sendRecovery() {
+            const email = document.getElementById('forgotEmail').value.trim();
+            const matricula = document.getElementById('forgotMatricula').value.trim();
+            
+            if (!email && !matricula) {
+                showAlert('Ingresa tu correo o matrícula', 'error', 'forgotAlert');
+                return;
+            }
+            
+            showAlert('Se ha enviado un enlace de recuperación a tu correo', 'success', 'forgotAlert');
+            setTimeout(() => {
+                bootstrap.Modal.getInstance(document.getElementById('forgotModal')).hide();
+                document.getElementById('forgotAlert').innerHTML = '';
+            }, 2000);
+        }
+
+        // Modo oscuro
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+            const isDark = document.body.classList.contains('dark-mode');
+            localStorage.setItem('darkMode', isDark ? 'enabled' : 'disabled');
+            const btn = document.getElementById('darkModeBtn');
+            if (btn) {
+                btn.innerHTML = isDark ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+            }
+        }
+
+        function checkDarkMode() {
+            const darkMode = localStorage.getItem('darkMode');
+            if (darkMode === 'enabled') {
+                document.body.classList.add('dark-mode');
+                const btn = document.getElementById('darkModeBtn');
+                if (btn) btn.innerHTML = '<i class="fas fa-sun"></i>';
+            }
+        }
+
+        // Verificar sesión activa
+        function checkActiveSession() {
+            const token = localStorage.getItem('token');
+            const userNombre = localStorage.getItem('userNombre');
+            if (token && userNombre) {
+                window.location.href = 'dashboard.html';
+            }
+        }
+
+        // Inicializar
+        document.addEventListener('DOMContentLoaded', () => {
+            createParticles();
+            checkActiveSession();
+            checkDarkMode();
+            loadRememberedUser();
+            setupRolDetection();
+            document.getElementById('loginForm').addEventListener('submit', handleLogin);
+        });
+
+        // Funciones globales para usar en onclick
+        window.togglePasswordVisibility = togglePasswordVisibility;
+        window.showRegister = showRegister;
+        window.registerUser = registerUser;
+        window.showForgotPassword = showForgotPassword;
+        window.sendRecovery = sendRecovery;
+        window.toggleDarkMode = toggleDarkMode;
+    </script>
+</body>
+</html>

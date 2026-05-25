@@ -1,0 +1,329 @@
+/* ============================================
+   ADMINISTRACIÓN DE CONSTANCIAS - MI UNIVERSIDAD
+   ============================================ */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: #f0f2f5;
+    min-height: 100vh;
+}
+
+/* Botón de regreso */
+.back-button-container {
+    padding: 15px 20px 0 20px;
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.btn-back {
+    background: linear-gradient(135deg, #6c757d 0%, #5a6268 100%);
+    color: white;
+    border: none;
+    padding: 10px 25px;
+    border-radius: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.9rem;
+}
+
+.btn-back:hover {
+    transform: translateX(-5px);
+    box-shadow: 0 5px 15px rgba(108, 117, 125, 0.4);
+}
+
+/* Contenedor principal */
+.admin-constancias-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.page-header h2 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #1e3c72;
+    margin-bottom: 5px;
+}
+
+/* Cards */
+.card {
+    border: none;
+    border-radius: 20px;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+}
+
+.card-header {
+    padding: 15px 20px;
+    border-bottom: none;
+}
+
+.card-header.bg-primary {
+    background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+}
+
+.card-header.bg-success {
+    background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+}
+
+.card-header.bg-info {
+    background: linear-gradient(135deg, #17a2b8 0%, #138496 100%);
+}
+
+.card-header.bg-warning {
+    background: linear-gradient(135deg, #ffc107 0%, #e0a800 100%);
+}
+
+.card-body {
+    padding: 20px;
+}
+
+/* Formularios */
+.form-control, .form-select {
+    border-radius: 12px;
+    border: 2px solid #e0e0e0;
+    padding: 10px 15px;
+    font-family: 'Poppins', sans-serif;
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: #1e3c72;
+    box-shadow: 0 0 0 3px rgba(30, 60, 114, 0.1);
+    outline: none;
+}
+
+label {
+    font-weight: 500;
+    margin-bottom: 8px;
+    color: #333;
+    font-size: 0.9rem;
+    display: block;
+}
+
+label i {
+    margin-right: 8px;
+    color: #1e3c72;
+}
+
+/* Botones de acción */
+.btn-generar-constancia, .btn-descargar-kardex {
+    background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+    color: white;
+    border: none;
+    padding: 12px 25px;
+    border-radius: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1rem;
+}
+
+.btn-generar-constancia:hover, .btn-descargar-kardex:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px rgba(220, 53, 69, 0.4);
+}
+
+/* Plantilla de constancia */
+.constancia-contenido {
+    padding: 40px;
+    background: white;
+    max-width: 800px;
+    margin: 0 auto;
+    font-family: 'Times New Roman', serif;
+}
+
+.constancia-header {
+    text-align: center;
+    margin-bottom: 30px;
+    border-bottom: 2px solid #1e3c72;
+    padding-bottom: 20px;
+}
+
+.constancia-header h1 {
+    color: #1e3c72;
+    font-size: 2rem;
+    margin: 10px 0 0;
+}
+
+.constancia-titulo h2 {
+    text-align: center;
+    font-size: 1.5rem;
+    margin: 30px 0;
+    text-decoration: underline;
+}
+
+.constancia-body {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    text-align: justify;
+}
+
+.constancia-nombre {
+    font-size: 1.3rem;
+    font-weight: bold;
+    text-align: center;
+    margin: 20px 0;
+    text-transform: uppercase;
+}
+
+.constancia-footer {
+    margin-top: 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+
+.firma {
+    text-align: center;
+}
+
+.sello {
+    text-align: center;
+    border: 1px dashed #666;
+    padding: 10px 20px;
+    border-radius: 10px;
+}
+
+/* Plantilla de kardex */
+.kardex-contenido {
+    padding: 30px;
+    background: white;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.kardex-header {
+    text-align: center;
+    margin-bottom: 25px;
+    border-bottom: 2px solid #1e3c72;
+    padding-bottom: 15px;
+}
+
+.kardex-header h2 {
+    color: #1e3c72;
+    margin: 5px 0;
+}
+
+.kardex-info {
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.kardex-tabla {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.kardex-tabla th {
+    background: #1e3c72;
+    color: white;
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #2a5298;
+}
+
+.kardex-tabla td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+}
+
+.kardex-tabla tfoot td {
+    background: #f8f9fa;
+    font-weight: bold;
+}
+
+.kardex-footer {
+    text-align: center;
+    font-size: 0.8rem;
+    color: #666;
+    margin-top: 20px;
+    padding-top: 10px;
+    border-top: 1px solid #ddd;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .back-button-container {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .page-header h2 {
+        font-size: 1.4rem;
+    }
+    
+    .btn-generar-constancia, .btn-descargar-kardex {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .constancia-contenido {
+        padding: 20px;
+    }
+    
+    .kardex-tabla {
+        font-size: 0.7rem;
+    }
+}
+
+/* Modo oscuro */
+body.dark-mode {
+    background: #1a1a2e;
+}
+
+body.dark-mode .card {
+    background: #16213e;
+}
+
+body.dark-mode .card-header.bg-primary,
+body.dark-mode .card-header.bg-success,
+body.dark-mode .card-header.bg-info,
+body.dark-mode .card-header.bg-warning {
+    background: #0f0f23 !important;
+}
+
+body.dark-mode .form-control,
+body.dark-mode .form-select {
+    background: #0f0f23;
+    border-color: #2a2a4a;
+    color: #eee;
+}
+
+body.dark-mode label {
+    color: #ddd;
+}
+
+body.dark-mode .kardex-info {
+    background: #0f0f23;
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.card {
+    animation: fadeIn 0.5s ease;
+}

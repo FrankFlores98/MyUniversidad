@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Materias - Mi Universidad</title>
+    <link rel="stylesheet" href="../css/materias.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="materias.css">
+         <script src="materias.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="dark-mode.css">
+</head>
+<body>
+    <!-- Botón de regreso -->
+    <div class="back-button-container">
+        <button class="btn-back" onclick="goBackToDashboard()">
+            <i class="fas fa-arrow-left"></i> Volver al Dashboard
+        </button>
+    </div>
+
+    <div class="container materias-container py-4">
+        <!-- Título dinámico según rol -->
+        <div class="page-header mb-4">
+            <h2 id="pageTitle">Mis Materias</h2>
+            <p id="pageSubtitle">Gestiona tus materias y cursos</p>
+        </div>
+
+        <!-- Pestañas (solo para maestros) -->
+        <ul class="nav nav-tabs mb-4" id="materiasTabs" style="display: none;">
+            <li class="nav-item">
+                <a class="nav-link active" data-tab="mis-cursos" onclick="switchTab('mis-cursos')">
+                    <i class="fas fa-chalkboard"></i> Mis Cursos
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-tab="alumnos" onclick="switchTab('alumnos')">
+                    <i class="fas fa-users"></i> Mis Alumnos
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-tab="asignar" onclick="switchTab('asignar')">
+                    <i class="fas fa-plus-circle"></i> Asignar Curso
+                </a>
+            </li>
+        </ul>
+
+        <!-- Barra de búsqueda y filtros -->
+        <div class="search-filter-bar mb-4">
+            <div class="row">
+                <div class="col-md-6 mb-2 mb-md-0">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="searchMateria" placeholder="Buscar materia, código o maestro..." onkeyup="filterMaterias()">
+                    </div>
+                </div>
+                <div class="col-md-3 mb-2 mb-md-0">
+                    <select id="filterSemestre" class="form-select" onchange="filterMaterias()">
+                        <option value="todos">Todos los semestres</option>
+                        <option value="1">1er Semestre</option>
+                        <option value="2">2do Semestre</option>
+                        <option value="3">3er Semestre</option>
+                        <option value="4">4to Semestre</option>
+                        <option value="5">5to Semestre</option>
+                        <option value="6">6to Semestre</option>
+                        <option value="7">7mo Semestre</option>
+                        <option value="8">8vo Semestre</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <select id="filterEstado" class="form-select" onchange="filterMaterias()">
+                        <option value="todos">Todos los estados</option>
+                        <option value="cursando">Cursando</option>
+                        <option value="aprobado">Aprobado</option>
+                        <option value="reprobado">Reprobado</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contenido para ALUMNOS: Materias inscritas -->
+        <div id="alumnoContent">
+            <div class="stats-materias mb-4">
+                <div class="row">
+                    <div class="col-md-4 mb-2">
+                        <div class="stat-materia-card">
+                            <i class="fas fa-book"></i>
+                            <div>
+                                <h3 id="totalMaterias">0</h3>
+                                <p>Materias Inscritas</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-2">
+                        <div class="stat-materia-card">
+                            <i class="fas fa-check-circle"></i>
+                            <div>
+                                <h3 id="totalAprobadas">0</h3>
+                                <p>Aprobadas</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-2">
+                        <div class="stat-materia-card">
+                            <i class="fas fa-chart-line"></i>
+                            <div>
+                                <h3 id="promedioGeneral">0.0</h3>
+                                <p>Promedio General</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row" id="materiasContainer">
+                <!-- Materias cargadas dinámicamente -->
+                <div class="col-12 text-center py-5">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Cargando...</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Botón para inscribir más materias -->
+            <div class="text-center mt-4" id="btnInscribirContainer">
+                <button class="btn-inscribir-mas" onclick="showInscribirModal()">
+                    <i class="fas fa-plus-circle"></i> Inscribirse a más materias
+                </button>
+            </div>
+        </div>
+
+        <!-- Contenido para MAESTROS: Cursos asignados -->
+        <div id="maestroContent" style="display: none;">
+            <div class="row" id="cursosContainer">
+                <!-- Cursos cargados dinámicamente -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para inscribir materias (Alumnos) -->
+    <div class="modal fade" id="inscribirModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"><i class="fas fa-clipboard-list"></i> Inscribirse a Materias</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="search-box-modal mb-3">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="searchDisponible" placeholder="Buscar materia disponible..." onkeyup="filterDisponibles()">
+                    </div>
+                    <div id="materiasDisponiblesContainer">
+                        <!-- Materias disponibles -->
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-primary" onclick="confirmarInscripcion()">
+                        <i class="fas fa-check"></i> Confirmar Inscripción
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal para ver alumnos (Maestros) -->
+    <div class="modal fade" id="alumnosModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header bg-primary text-white">
+                    <h5 class="modal-title"><i class="fas fa-users"></i> Alumnos Inscritos</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Matrícula</th>
+                                    <th>Nombre</th>
+                                    <th>Correo</th>
+                                    <th>Calificación</th>
+                                    <th>Estado</th>
+                                </tr>
+                            </thead>
+                            <tbody id="alumnosTableBody">
+                                <!-- Alumnos -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de confirmación -->
+    <div class="modal fade" id="confirmModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"><i class="fas fa-check-circle"></i> Confirmación</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body" id="confirmModalMessage">
+                    Acción realizada correctamente
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Aceptar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/materias.js"></script>
+    <script src="dark-mode.js"></script>
+</body>
+</html>
